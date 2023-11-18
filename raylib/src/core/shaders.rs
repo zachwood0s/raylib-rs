@@ -265,7 +265,7 @@ pub trait RaylibShader: AsRef<ffi::Shader> + AsMut<ffi::Shader> {
             c_uniform_name,
             uniform_name.len()
         );
-        unsafe { ffi::GetShaderLocationAttribute(*self.as_ref(), c_uniform_name.as_ptr()) }
+        unsafe { ffi::GetShaderLocationAttrib(*self.as_ref(), c_uniform_name.as_ptr()) }
     }
 
     /// Sets shader uniform value

@@ -82,7 +82,7 @@ impl RaylibHandle {
         unsafe {
             WeakShader(ffi::Shader {
                 id: ffi::rlGetShaderIdDefault(),
-                locs: ffi::rlGetShaderLocsDefault()
+                locs: ffi::rlGetShaderLocsDefault(),
             })
         }
     }
@@ -258,6 +258,16 @@ pub trait RaylibShader: AsRef<ffi::Shader> + AsMut<ffi::Shader> {
         unsafe { ffi::GetShaderLocation(*self.as_ref(), c_uniform_name.as_ptr()) }
     }
 
+    fn get_shader_location_attribute(&self, uniform_name: &str) -> i32 {
+        let c_uniform_name = CString::new(uniform_name).unwrap();
+        println!(
+            "Getting shader location attribute {:?} {}",
+            c_uniform_name,
+            uniform_name.len()
+        );
+        unsafe { ffi::GetShaderLocationAttribute(*self.as_ref(), c_uniform_name.as_ptr()) }
+    }
+
     /// Sets shader uniform value
     #[inline]
     fn set_shader_value<S: ShaderV>(&mut self, uniform_loc: i32, value: S) {
@@ -335,3 +345,4 @@ impl RaylibHandle {
         unsafe { ffi::rlGetMatrixProjection().into() }
     }
 }
+
